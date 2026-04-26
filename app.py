@@ -9,57 +9,63 @@ def add_text_to_image(image_path, text):
     img = Image.open(image_path).convert("RGB")
     draw = ImageDraw.Draw(img)
 
-    # Fixed large bold font
-    font_size = img.width // 10
-    try:
-        font = ImageFont.truetype("arialbd.ttf", font_size)
-    except:
-        font = ImageFont.load_default()
+    # Start with large font size
+    font_size = img.width // 5  
 
-    # --- TEXT WRAPPING ---
-    max_width = img.width * 0.8
-    words = text.split()
-    lines = []
-    current_line = ""
+    while font_size > 20:
+        try:
+            font = ImageFont.truetype("arialbd.ttf", font_size)
+        except:
+            font = ImageFont.load_default()
 
-    for word in words:
-        test_line = current_line + " " + word if current_line else word
-        bbox = draw.textbbox((0, 0), test_line, font=font)
-        test_width = bbox[2] - bbox[0]
+        # --- WRAP TEXT ---
+        max_width = img.width * 0.9
+        words = text.split()
+        lines = []
+        current_line = ""
 
-        if test_width <= max_width:
-            current_line = test_line
-        else:
+        for word in words:
+            test_line = current_line + " " + word if current_line else word
+            bbox = draw.textbbox((0, 0), test_line, font=font)
+            test_width = bbox[2] - bbox[0]
+
+            if test_width <= max_width:
+                current_line = test_line
+            else:
+                lines.append(current_line)
+                current_line = word
+
+        if current_line:
             lines.append(current_line)
-            current_line = word
 
-    if current_line:
-        lines.append(current_line)
+        # --- CHECK HEIGHT ---
+        line_heights = []
+        for line in lines:
+            bbox = draw.textbbox((0, 0), line, font=font)
+            line_heights.append(bbox[3] - bbox[1])
 
-    # --- CALCULATE TOTAL HEIGHT ---
-    line_heights = []
-    for line in lines:
-        bbox = draw.textbbox((0, 0), line, font=font)
-        line_heights.append(bbox[3] - bbox[1])
+        total_text_height = sum(line_heights) + (len(lines) - 1) * 20
 
-    total_text_height = sum(line_heights) + (len(lines) - 1) * 100  # spacing
+        # If fits → stop
+        if total_text_height <= img.height * 0.8:
+            break
 
-    # --- START POSITION (centered) ---
+        # Else reduce size
+        font_size -= 5
+
+    # --- CENTER TEXT ---
     y = (img.height - total_text_height) // 2
 
-    # --- DRAW EACH LINE ---
     for i, line in enumerate(lines):
         bbox = draw.textbbox((0, 0), line, font=font)
         text_width = bbox[2] - bbox[0]
-
         x = (img.width - text_width) // 2
 
         draw.text((x, y), line, font=font, fill="black")
 
-        y += line_heights[i] + 10  # line spacing
+        y += line_heights[i] + 20
 
     return img
-
 def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
