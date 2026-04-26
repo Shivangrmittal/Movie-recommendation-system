@@ -36,4 +36,4 @@ if st.button('Recommend'):
 
     for i in range(5):
         with cols[i]:
-            st.markdown(f"<h2 style='text-align:center;'>{names[i]}</h2>", unsafe_allow_html=True)
+            st.text(names[i])
