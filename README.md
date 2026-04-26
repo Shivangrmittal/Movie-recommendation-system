@@ -1,2 +1,54 @@
-# Movie-recommendation-system
-Machine Learning basic project which recommend five similar movies for a selected movie
+# 🎬 Movie Recommender System
+
+A simple Movie Recommender System built using **Machine Learning** and deployed with **Streamlit**, **Docker**, and **Render**.
+
+---
+
+## 🚀 Live Demo  
+👉 https://movie-recommendation-system-1-dho2.onrender.com
+
+---
+
+## 📌 Features  
+- Recommend movies based on user input  
+- Clean UI using Streamlit  
+- Displays movie posters  
+- Fast and easy to use  
+
+---
+
+## 🛠️ Tech Stack  
+- Python  
+- Pandas, NumPy, Scikit-learn  
+- Streamlit  
+- Docker  
+- Render  
+
+---
+
+## ⚙️ Run Locally  
+
+```bash
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+pip install -r requirements.txt
+streamlit run app.py
+
+
+## ⚙️ Run With Docker 
+
+```bash
+docker build -t movie-recommender .
+docker run -p 8501:8501 movie-recommender
+
+## Deployment
+
+Deployed using:
+-Render
+-Docker
+-Github
+
+
+##
+
+If you like this project, give it a star!
