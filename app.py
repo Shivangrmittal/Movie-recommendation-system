@@ -42,7 +42,7 @@ def add_text_to_image(image_path, text):
         bbox = draw.textbbox((0, 0), line, font=font)
         line_heights.append(bbox[3] - bbox[1])
 
-    total_text_height = sum(line_heights) + (len(lines) - 1) * 10  # spacing
+    total_text_height = sum(line_heights) + (len(lines) - 1) * 100  # spacing
 
     # --- START POSITION (centered) ---
     y = (img.height - total_text_height) // 2
