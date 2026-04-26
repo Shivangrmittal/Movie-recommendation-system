@@ -34,21 +34,3 @@ cd your-repo
 pip install -r requirements.txt
 streamlit run app.py
 
-
-## ⚙️ Run With Docker 
-
-```bash
-docker build -t movie-recommender .
-docker run -p 8501:8501 movie-recommender
-
-## Deployment
-
-Deployed using:
--Render
--Docker
--Github
-
-
-##
-
-If you like this project, give it a star!
